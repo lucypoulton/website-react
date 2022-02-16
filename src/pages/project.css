@@ -1,10 +1,18 @@
+b, strong {
+    font-weight: 450 !important;
+}
+
 .project-button {
     display: inline-block;
+    padding: 1em 2em !important;
+}
+
+.project-button > h2 {
+    margin: 0;
 }
 
 .project-button > span {
     display: inline-block;
-    padding: 0 1em 1em;
     font-weight: inherit;
 }
 

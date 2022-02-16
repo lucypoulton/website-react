@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import {Fade, Navbar, Theme} from 'lucy-react-components';
+
+import {Route, Switch, useLocation} from 'wouter';
+import {ProjectPage} from "./pages/project";
+import IndexPage from "./pages";
+import {PronounsCloudPage} from "./pages/pnc";
+
+import 'lucy-react-components/dist/index.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [theme, setTheme] = useState<"light" | "dark">("light")
+	const [fade, setFade] = useState(true);
+	const [location, setLocation] = useState<string | undefined>(undefined);
+
+	const [route, setRoute] = useLocation();
+
+	useEffect(() => {
+		setFade(false);
+		setTimeout(() => {
+			setFade(true);
+			setLocation(route);
+		}, 300)
+	}, [route])
+
+	return (
+		<Theme theme={theme}>
+			<Navbar content={<span onClick={() => setRoute("/")} style={{fontWeight: "inherit"}}>Lucy Poulton</span>}
+					lightswitch
+					pulled={theme === "light"}
+					onSwitchPull={() => setTheme(theme === "light" ? "dark" : "light")}
+			/>
+			<Fade fadeIn={fade}>
+				<Switch location={location}>
+					<Route path="/" component={IndexPage}/>
+					<Route path="/pnc" component={PronounsCloudPage} />
+					<Route path="/:project" component={ProjectPage}/>
+				</Switch>
+			</Fade>
+		</Theme>
+	);
 }
 
 export default App;

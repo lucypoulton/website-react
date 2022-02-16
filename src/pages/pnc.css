@@ -1,0 +1,21 @@
+.pnc-fields label {
+    display: block;
+    margin: 1em;
+    font-size: 1.1em;
+}
+
+.pnc-fields input[type=text] {
+    box-sizing: border-box;
+    font-size: 1em;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    text-align: center;
+    width: 5em;
+    border-bottom: 2px solid var(--dark-secondary);
+    border-radius: 2px;
+}
+
+.pnc-fields input[type=text]:focus-visible {
+    outline: none;
+}
