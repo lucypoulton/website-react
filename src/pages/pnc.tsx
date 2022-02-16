@@ -1,5 +1,4 @@
-import { stat } from "fs";
-import {FormEvent, FormEventHandler, useReducer} from "react";
+import {FormEvent, useReducer} from "react";
 import "./pnc.css";
 
 export interface PronounSet {
@@ -22,8 +21,8 @@ interface Field {
 
 
 const capitalise = (input: string): string => {
-	if (input.length == 0) return input;
-	if (input.length == 1) return input.toUpperCase();
+	if (input.length === 0) return input;
+	if (input.length === 1) return input.toUpperCase();
 	return input[0].toUpperCase() + input.substring(1).toLowerCase();
 }
 

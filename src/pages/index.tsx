@@ -10,7 +10,7 @@ export default function IndexPage() {
 		<div>
 			<a href="https://github.com/lucypoulton">GitHub</a> | {" "}
 			<a href="https://discord.lucypoulton.net">Discord</a> | {" "}
-			<a href="#"
+			<a href="/#"
 			   onClick={() => alert(`lucy@<this domain>
 Discord is my preferred method of contact - please reach out to me on there if you can!`)}>Email</a>
 		</div>
