@@ -27,7 +27,7 @@ jobs:
         run: |
           cd dist
           rm -rf `ls | grep -v .git`
-          cp -r ../src/dist/lucypoulton-dot-net/* .
+          cp -r ../src/build/* .
           cp index.html 404.html
           echo "lucypoulton.net" > CNAME
           git config --global user.name "GitHub Actions"
