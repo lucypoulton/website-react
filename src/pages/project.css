@@ -1,0 +1,21 @@
+.project-button {
+    display: inline-block;
+}
+
+.project-button > span {
+    display: inline-block;
+    padding: 0 1em 1em;
+    font-weight: inherit;
+}
+
+.project-links {
+    margin: 1em;
+}
+
+.project-links > span:not(:last-child):after {
+    content: " | ";
+}
+
+ul {
+    display: inline-block;
+}
