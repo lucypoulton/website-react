@@ -27,3 +27,11 @@ b, strong {
 ul {
     display: inline-block;
 }
+
+.project-title {
+    margin-bottom: 0;
+}
+
+.project-subtitle {
+    margin-top: 0;
+}

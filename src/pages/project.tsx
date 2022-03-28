@@ -3,11 +3,13 @@ import {environment, projectDataLoad} from "../environment";
 import "./project.css";
 import {useState} from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import rehypeRaw from 'rehype-raw';
 
 export interface Project {
 	name: string,
 	repo: string,
 	displayName: string
+	subtitle?: string
 	description: string
 	lastRelease?: string,
 	longDescription?: string,
@@ -30,7 +32,8 @@ export function ProjectPage({params}: RouteComponentProps) {
 	</>
 
 	return <>
-		<h1>{project.displayName}</h1>
+		<h1 className="project-title">{project.displayName}</h1>
+		<h3 className="project-subtitle">{project.subtitle}</h3>
 		<div className="project-links">
 			{Object.entries(project.links).map(link => <span key={link[0]}><a href={link[1]}>{link[0]}</a></span>)}
 			{Object.entries(project.routerLinks).map(link => <span key={link[0]}><Link href={link[1]}>{link[0]}</Link></span>)}
@@ -39,10 +42,12 @@ export function ProjectPage({params}: RouteComponentProps) {
 		</div>
 		<div className="button project-button accent"
 			 onClick={() => window.open(`https://github.com/${project.repo}/releases/latest`, "_blank")}>
-			<h2>Download</h2>
-			<span>Version {project.lastRelease}</span>
+			{project.lastRelease ? <>
+				<h2>Download</h2>
+				<span>Version {project.lastRelease}</span> </> : <h2>No downloads available</h2>
+			}
 		</div>
-		<ReactMarkdown>
+		<ReactMarkdown rehypePlugins={[rehypeRaw]}>
 			{project.longDescription ?? ""}
 		</ReactMarkdown>
 	</>

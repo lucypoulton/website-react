@@ -6,3 +6,10 @@
 .index-project:hover {
     cursor: pointer;
 }
+
+.index-project h4 {
+    margin: 0
+}
+.index-project h2 {
+    margin-bottom: 0;
+}

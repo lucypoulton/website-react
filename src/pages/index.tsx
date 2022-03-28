@@ -27,6 +27,7 @@ Discord is my preferred method of contact - please reach out to me on there if y
 					 onClick={() => setLocation(project.name)}
 					 className="button index-project">
 					<h2>{project.displayName}</h2>
+					<h4>{project.subtitle}</h4>
 					<p>{project.description}</p>
 				</div>)}
 		</Flowbox>

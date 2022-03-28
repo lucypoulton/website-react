@@ -2,8 +2,17 @@
 
 import {Project} from "./pages/project";
 
-export const environment = {
+export const environment : {projects: Project[]} = {
 	projects: [
+		{
+			name: "chatchat",
+			subtitle: "by HelpChat",
+			displayName: "ChatChat",
+			repo: "helpchat/chatchat",
+			description: "Soon™",
+			links: {},
+			routerLinks: {}
+		},
 		{
 			name: "pronouns",
 			repo: "lucypoulton/pronouns",
@@ -27,7 +36,7 @@ export const environment = {
 			},
 			routerLinks: {}
 		}
-	] as Project[]
+	]
 }
 
 // this is possibly some of the worst code I have ever written.
