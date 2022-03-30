@@ -13,3 +13,42 @@
 .index-project h2 {
     margin-bottom: 0;
 }
+
+.index-splitview {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.index-splitview > div {
+    flex: 1 1 30em;
+}
+
+.header-intro-thing {
+    font-size: 1.1em;
+}
+
+.github-activity * {
+    text-align: left !important;
+}
+
+@media screen and (min-width: 65em) {
+    .index-splitview {
+        padding: 0 3em;
+    }
+    .index-splitview > div {
+        padding: 0 2em;
+    }
+    .header-intro-thing > p {
+        text-align: left !important;
+    }
+}
+
+@media screen and (max-width: 80em) {
+    .header-intro-thing > p {
+        text-align: center !important;
+    }
+
+    .github-activity * {
+        text-align: center !important;
+    }
+}

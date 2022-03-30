@@ -1,8 +1,10 @@
 // this is intended to be run out of a github pages repo so recompiling every time this gets changed is not a big deal
 
 import {Project} from "./pages/project";
+import {Activity, githubEvents} from './components/github'
 
-export const environment : {projects: Project[]} = {
+export const environment: { projects: Project[], activity: Activity[] } = {
+	activity: [],
 	projects: [
 		{
 			name: "chatchat",
@@ -42,14 +44,21 @@ export const environment : {projects: Project[]} = {
 // this is possibly some of the worst code I have ever written.
 async function fetchProjectData() {
 	return Promise.all(
-		environment.projects.map(async project => {
+		[...environment.projects.map(async project => {
 			const readmeReq = await fetch(`https://raw.githubusercontent.com/${project.repo}/master/README.md`);
 			project.longDescription = await readmeReq.text();
 
 			const versionReq = await fetch(`https://api.github.com/repos/${project.repo}/releases/latest`,
 				{headers: {"accept": "application/vnd.github.v3+json"}});
 			project.lastRelease = (await versionReq.json())["name"];
-		})
+		}),
+			(async () => {
+				const activityReq = await fetch(`https://api.github.com/users/lucypoulton/events`,
+					{headers: {"accept": "application/vnd.github.v3+json"}});
+				environment.activity = (await activityReq.json())
+					.filter((x: Activity) => githubEvents.includes(x.type))
+					.slice(0, 5);
+			})()]
 	);
 }
 
