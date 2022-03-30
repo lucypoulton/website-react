@@ -7,10 +7,11 @@ import IndexPage from "./pages";
 import {PronounsCloudPage} from "./pages/pnc";
 
 import 'lucy-react-components/dist/index.css';
+import {projectDataLoad} from './environment'
 
 function App() {
 	const [theme, setTheme] = useState<"light" | "dark">("light")
-	const [fade, setFade] = useState(true);
+	const [fade, setFade] = useState(false);
 	const [location, setLocation] = useState<string | undefined>(undefined);
 
 	const [route, setRoute] = useLocation();
@@ -22,6 +23,8 @@ function App() {
 			setLocation(route);
 		}, 300)
 	}, [route])
+
+	projectDataLoad.then(() => setFade(true));
 
 	return (
 		<Theme theme={theme}>
