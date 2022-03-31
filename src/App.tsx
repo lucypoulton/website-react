@@ -24,7 +24,9 @@ function App() {
 		}, 300)
 	}, [route])
 
-	projectDataLoad.then(() => setFade(true));
+	useEffect(() => {
+		projectDataLoad.then(() => setFade(true))
+	}, [])
 
 	return (
 		<Theme theme={theme}>
