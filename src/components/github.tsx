@@ -21,7 +21,7 @@ type ActivityEntry = (activity: Activity) =>
 } | null
 
 export const githubEvents: ReadonlyArray<string> =
-	['PushEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'IssuesEvent', 'CreateEvent'] as const
+	['PushEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'IssuesEvent', 'CreateEvent', 'IssueCommentEvent'] as const
 
 interface Commit {
 	sha: string,
@@ -37,17 +37,18 @@ export const titles: {[k: string]: ActivityEntry} = {
 						{c.sha.slice(0, 7)}</code></a>: {c.message}
 				</span>)
 	}),
-	'PullRequestEvent': activity => ({
-		title: 'opened a pull request',
+	'PullRequestEvent': activity =>
+		['opened', 'edited', 'closed', 'reopened', 'assigned', 'unassigned', 'created'].includes(activity.payload.action) ? {
+		title: `${activity.payload.action === 'closed' && activity.payload.pull_request.merged ? 'merged' : activity.payload.action} a pull request`,
 		suffix: 'in',
 		body: <span><a href={prUrl(activity)}>#{activity.payload.pull_request.number}:</a> {activity.payload.pull_request.title}</span>
-	}),
+	} : null,
 	'PullRequestReviewEvent': activity => ({
 		...titles['PullRequestEvent'](activity)!,
 		title: 'reviewed a pull request'
 	}),
 	'IssuesEvent': activity => activity.payload.action === 'opened' ? ({
-		title: 'opened an issue',
+		title: `${activity.payload.action} an issue`,
 		suffix: 'in',
 		body: <span><a href={issueUrl(activity)}>#{activity.payload.issue.number}:</a> {activity.payload.issue.title}</span>
 	}) : null,
@@ -55,7 +56,11 @@ export const titles: {[k: string]: ActivityEntry} = {
 		title: `created a new ${activity.payload.ref_type}`,
 		suffix: 'in',
 		body: activity.payload.ref
-	})
+	}),
+	'IssueCommentEvent': activity => activity.payload.action === 'created' ? {
+	...titles['IssuesEvent'](activity)!,
+		title: 'commented on an issue'
+	} : null
 }
 
 

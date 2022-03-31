@@ -13,3 +13,7 @@
 .github-activity-title {
     font-size: 1.05em;
 }
+
+.github-activity span {
+    display: inline-block;
+}
