@@ -21,7 +21,7 @@ type ActivityEntry = (activity: Activity) =>
 } | null
 
 export const githubEvents: ReadonlyArray<string> =
-	['PushEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'IssuesEvent'] as const
+	['PushEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'IssuesEvent', 'CreateEvent'] as const
 
 interface Commit {
 	sha: string,
@@ -50,8 +50,14 @@ export const titles: {[k: string]: ActivityEntry} = {
 		title: 'opened an issue',
 		suffix: 'in',
 		body: <span><a href={issueUrl(activity)}>#{activity.payload.issue.number}:</a> {activity.payload.issue.title}</span>
-	}) : null
+	}) : null,
+	'CreateEvent': activity => ({
+		title: `created a new ${activity.payload.ref_type}`,
+		suffix: 'in',
+		body: activity.payload.ref
+	})
 }
+
 
 function commitUrl(activity: Activity, commit: Commit) {
 	return `https://github.com/${activity.repo.name}/commit/${commit.sha}`
@@ -69,7 +75,11 @@ export default function GithubStats() {
 
 	return <div className="github-activity">
 		<h3>Over on <a href="https://github.com/lucypoulton">GitHub</a>...</h3>
-		{environment.activity.map(x => {
+		{environment.activity.length === 0 ?
+			<p>...oh dear. There's <i>supposed</i> to be my most recent GitHub activity here, but it looks like
+			GitHub doesn't feel like sharing today. Oh well. Care to <a href="https://github.com/lucypoulton">
+					take a look on the site itself?</a></p> :
+			environment.activity.map(x => {
 			const content = titles[x.type]?.(x);
 			if (!content) return null;
 			return <div key={x.id}>
