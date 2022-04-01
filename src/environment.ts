@@ -3,8 +3,8 @@
 import {Project} from "./pages/project";
 import {Activity, githubEvents} from './components/github'
 
-export const environment: { projects: Project[], activity: Activity[] } = {
-	activity: [],
+export const environment: { projects: Project[], activity: Activity[] | null } = {
+	activity: null,
 	projects: [
 		{
 			name: "chatchat",
@@ -53,12 +53,13 @@ async function fetchProjectData() {
 			project.lastRelease = (await versionReq.json())["name"];
 		}),
 			(async () => {
-				const activityReq = await fetch(`https://api.github.com/users/lucypoulton/events`,
-					{headers: {"accept": "application/vnd.github.v3+json"}});
-				environment.activity = (await activityReq.json())
-					.filter((x: Activity) => githubEvents.includes(x.type))
-					.slice(0, 5);
-			})()]
+			const activityReq = await fetch(`https://api.github.com/users/lucypoulton/events`,
+				{headers: {"accept": "application/vnd.github.v3+json"}});
+			environment.activity = (await activityReq.json())
+				.filter((x: Activity) => githubEvents.includes(x.type))
+				.slice(0, 5);
+		})()
+		]
 	);
 }
 

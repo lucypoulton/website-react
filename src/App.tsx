@@ -17,16 +17,15 @@ function App() {
 	const [route, setRoute] = useLocation();
 
 	useEffect(() => {
-		setFade(false);
-		setTimeout(() => {
-			setFade(true);
-			setLocation(route);
-		}, 300)
+		projectDataLoad.then(() => {
+			setFade(false);
+			setTimeout(() => {
+				setFade(true);
+				setLocation(route);
+			}, 300)
+		})
 	}, [route])
 
-	useEffect(() => {
-		projectDataLoad.then(() => setFade(true))
-	}, [])
 
 	return (
 		<Theme theme={theme}>

@@ -1,5 +1,5 @@
-import React from "react";
-import {environment} from '../environment';
+import React, {useEffect, useState} from "react";
+import {environment, projectDataLoad} from '../environment';
 import './github.css';
 import moment from 'moment'
 
@@ -78,13 +78,19 @@ function issueUrl(activity: Activity) {
 
 export default function GithubStats() {
 
+	const [activity, setActivity] = useState<Activity[] | null>(null);
+
+	useEffect(() => {
+		projectDataLoad.then(() => setActivity(environment.activity!))
+	}, [])
+
 	return <div className="github-activity">
 		<h3>Over on <a href="https://github.com/lucypoulton">GitHub</a>...</h3>
-		{environment.activity.length === 0 ?
+		{activity === null ?
 			<p>...oh dear. There's <i>supposed</i> to be my most recent GitHub activity here, but it looks like
 			GitHub doesn't feel like sharing today. Oh well. Care to <a href="https://github.com/lucypoulton">
 					take a look on the site itself?</a></p> :
-			environment.activity.map(x => {
+			activity.map(x => {
 			const content = titles[x.type]?.(x);
 			if (!content) return null;
 			return <div key={x.id}>
