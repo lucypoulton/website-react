@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {environment, projectDataLoad} from '../environment';
-import './github.css';
+import './github.scss';
 import moment from 'moment'
 
 export interface Activity {
@@ -14,11 +14,11 @@ export interface Activity {
 }
 
 type ActivityEntry = (activity: Activity) =>
-{
-	title: string,
-	suffix: string,
-	body: React.ReactNode
-} | null
+	{
+		title: string,
+		suffix: string,
+		body: React.ReactNode
+	} | null
 
 export const githubEvents: ReadonlyArray<string> =
 	['PushEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'IssuesEvent', 'CreateEvent', 'IssueCommentEvent'] as const
@@ -28,7 +28,7 @@ interface Commit {
 	message: string
 }
 
-export const titles: {[k: string]: ActivityEntry} = {
+export const titles: { [k: string]: ActivityEntry } = {
 	'PushEvent': (x) => ({
 		title: 'pushed',
 		suffix: 'to',
@@ -39,10 +39,11 @@ export const titles: {[k: string]: ActivityEntry} = {
 	}),
 	'PullRequestEvent': activity =>
 		['opened', 'edited', 'closed', 'reopened', 'assigned', 'unassigned', 'created'].includes(activity.payload.action) ? {
-		title: `${activity.payload.action === 'closed' && activity.payload.pull_request.merged ? 'merged' : activity.payload.action} a pull request`,
-		suffix: 'in',
-		body: <span><a href={prUrl(activity)}>#{activity.payload.pull_request.number}:</a> {activity.payload.pull_request.title}</span>
-	} : null,
+			title: `${activity.payload.action === 'closed' && activity.payload.pull_request.merged ? 'merged' : activity.payload.action} a pull request`,
+			suffix: 'in',
+			body: <span><a
+				href={prUrl(activity)}>#{activity.payload.pull_request.number}:</a> {activity.payload.pull_request.title}</span>
+		} : null,
 	'PullRequestReviewEvent': activity => ({
 		...titles['PullRequestEvent'](activity)!,
 		title: 'reviewed a pull request'
@@ -50,7 +51,8 @@ export const titles: {[k: string]: ActivityEntry} = {
 	'IssuesEvent': activity => activity.payload.action === 'opened' ? ({
 		title: `${activity.payload.action} an issue`,
 		suffix: 'in',
-		body: <span><a href={issueUrl(activity)}>#{activity.payload.issue.number}:</a> {activity.payload.issue.title}</span>
+		body: <span><a
+			href={issueUrl(activity)}>#{activity.payload.issue.number}:</a> {activity.payload.issue.title}</span>
 	}) : null,
 	'CreateEvent': activity => ({
 		title: `created a new ${activity.payload.ref_type}`,
@@ -58,7 +60,7 @@ export const titles: {[k: string]: ActivityEntry} = {
 		body: activity.payload.ref
 	}),
 	'IssueCommentEvent': activity => activity.payload.action === 'created' ? {
-	...titles['IssuesEvent'](activity)!,
+		...titles['IssuesEvent'](activity)!,
 		title: 'commented on an issue'
 	} : null
 }
@@ -85,19 +87,23 @@ export default function GithubStats() {
 	}, [])
 
 	return <div className="github-activity">
-		<h3>Over on <a href="https://github.com/lucypoulton">GitHub</a>...</h3>
-		{activity === null ?
-			<p>...oh dear. There's <i>supposed</i> to be my most recent GitHub activity here, but it looks like
-			GitHub doesn't feel like sharing today. Oh well. Care to <a href="https://github.com/lucypoulton">
-					take a look on the site itself?</a></p> :
-			activity.map(x => {
-			const content = titles[x.type]?.(x);
-			if (!content) return null;
-			return <div key={x.id}>
+		<div className='github-inner'>
+			<h3>Over on <a href="https://github.com/lucypoulton">GitHub</a>...</h3>
+			{activity === null ?
+				<p>...oh dear. There's <i>supposed</i> to be my most recent GitHub activity here, but it looks like
+					GitHub doesn't feel like sharing today. Oh well. Care to <a href="https://github.com/lucypoulton">
+						take a look on the site itself?</a></p> :
+				activity.map(x => {
+					const content = titles[x.type]?.(x);
+					if (!content) return null;
+					return <div key={x.id}>
 				<span>
-					{moment(x.created_at).fromNow()}, I <b>{content.title}</b> {content.suffix} <a href={`https://github.com/${x.repo.name}`}>{x.repo.name}</a>
+					{moment(x.created_at).fromNow()}, I <b>{content.title}</b> {content.suffix} <a
+					href={`https://github.com/${x.repo.name}`}>{x.repo.name}</a>
 					</span>
-			<p>{content.body}</p>
-			</div>
-		})}</div>;
+						<p>{content.body}</p>
+					</div>
+				})}
+		</div>
+	</div>;
 }

@@ -1,0 +1,71 @@
+.index-project {
+  flex-grow: 0 !important;
+  padding: .5em 1em !important;
+
+  h4 {
+    margin: 0
+  }
+
+  h2 {
+    display: inline-block;
+    margin-bottom: 0;
+    background-image: var(--accent);
+    // nonstandard but widespread support
+    //noinspection CssInvalidPropertyValue
+    background-clip: text;
+    -webkit-background-clip: text;
+    // padding to give clip space for safari border artifact workaround
+    padding: 1px;
+    transition: transform .4s var(--transition), color .2s !important;
+  }
+}
+
+.theme-dark .index-project h2 {
+  background-image: linear-gradient(135deg, var(--purple), var(--pink))
+}
+
+.index-project:hover {
+  cursor: pointer;
+
+  h2 {
+    color: transparent;
+    // workaround for border artifacts on safari
+    clip-path: inset(.5px);
+  }
+}
+
+.index-splitview {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    flex: 1 1 30em;
+  }
+}
+
+.header-intro-thing {
+  font-size: 1.1em;
+}
+
+.github-activity * {
+  text-align: left !important;
+}
+
+@media screen and (min-width: 65em) {
+  .index-splitview {
+    padding: 0 3em;
+
+    > div {
+      padding: 0 2em;
+    }
+  }
+  .header-intro-thing > p {
+    text-align: left !important;
+  }
+}
+
+@media screen and (max-width: 80em) {
+  .header-intro-thing > p {
+    text-align: center !important;
+  }
+}

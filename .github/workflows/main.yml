@@ -13,16 +13,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: "src"
-          
+
       - name: Build
-        run: cd src && npm install && npx react-scripts build && cd ..
+        run: cd src && npm install && npm run build && cd ..
 
       - name: Checkout deployment branch
         uses: actions/checkout@v2
         with:
           path: "dist"
           ref: "github-pages"
-          
+
       - name: Copy files
         run: |
           cd dist
