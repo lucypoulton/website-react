@@ -8,17 +8,17 @@ export const environment: { projects: Project[], activity: Activity[] | null } =
 	projects: [
 		{
 			name: 'djs-slash-helper',
-			repo: 'lucypoulton/djs-slash-helper',
+			repo: ' lucyydotp/djs-slash-helper',
 			description: 'A small library that handles the faffy bit of setting up interaction-based command with Discord.js.'
 		},
 		{
 			name: 'lucypoulton.net',
-			repo: 'lucypoulton/website-react',
+			repo: 'lucyydotp/website-react',
 			description: `This website! It's written in React and has some cool stuff going on internally.`
 		},
 		{
 			name: 'lucy-react-components',
-			repo: 'lucypoulton/lucy-react-components',
+			repo: 'lucyydotp/lucy-react-components',
 			description: 'A set of very stylistic React components, used to write this website.'
 		},
 		{
@@ -29,12 +29,12 @@ export const environment: { projects: Project[], activity: Activity[] | null } =
 		},
 		{
 			name: 'Kyorify',
-			repo: 'lucypoulton/papi-kyorify',
+			repo: 'lucyydotp/papi-kyorify',
 			description: 'A utility to convert between Minecraft rich text formats.'
 		},
 		{
 			name: 'Really Bad Command Framework',
-			repo: 'lucypoulton/really-bad-cmd-lib',
+			repo: 'lucyydotp/really-bad-cmd-lib',
 			description: `A text-based command library inspired by Minecraft's Bridagier library.`
 		},
 		{
@@ -45,12 +45,12 @@ export const environment: { projects: Project[], activity: Activity[] | null } =
 		},
 		{
 			name: 'json-doclet',
-			repo: 'lucypoulton/json-doclet',
+			repo: 'lucyydotp/json-doclet',
 			description: 'A Javadoc doclet that outputs to JSON.'
 		},
 		{
 			name: "pronouns",
-			repo: "lucypoulton/pronouns",
+			repo: "lucyydotp/pronouns",
 			displayName: "ProNouns",
 			showPage: true,
 			description: "ProNouns is a Minecraft server plugin that lets players set their pronouns, which server admins can substitute into server messages.",
@@ -61,7 +61,7 @@ export const environment: { projects: Project[], activity: Activity[] | null } =
 		},
 		{
 			name: "squirtgun",
-			repo: "lucypoulton/squirtgun",
+			repo: "lucyydotp/squirtgun",
 			displayName: "Squirtgun",
 			showPage: true,
 			description: "Squirtgun is a multi-purpose Java library that makes the development of cross-platform Minecraft server plugins and Discord bots easier.",
@@ -93,13 +93,13 @@ async function fetchAllData() {
 				.filter(project => project.showPage)
 				.map(fetchProjectInfo),
 
-			fetch(`https://api.github.com/users/lucypoulton/events`,
+			fetch(`https://api.github.com/users/lucyydotp/events`,
 				{headers: {"accept": "application/vnd.github.v3+json"}})
 				.then(data => data.json())
 				.then(data => environment.activity = data
 					.filter((x: Activity) => githubEvents.includes(x.type))
 					.slice(0, 5)
-				)
+				).catch(() => {})
 		]
 	);
 }

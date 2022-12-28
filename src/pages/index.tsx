@@ -11,7 +11,7 @@ export default function IndexPage() {
 			<div className="header-intro-thing">
 				<h1>Hey! I'm Lucy.</h1>
 				<div>
-					<a href="https://github.com/lucypoulton">GitHub</a> | {" "}
+					<a href="https://github.com/lucyydotp">GitHub</a> | {" "}
 					<a href="https://discord.lucypoulton.net">Discord</a> | {" "}
 					<a href="/#"
 					   onClick={() => alert("lucy@<this domain>")}>Email</a>

@@ -88,7 +88,7 @@ export default function GithubStats() {
 
 	return <div className="github-activity">
 		<div className='github-inner'>
-			<h3>Over on <a href="https://github.com/lucypoulton">GitHub</a>...</h3>
+			<h3>Over on <a href="https://github.com/lucyydotp">GitHub</a>...</h3>
 			{activity === null ?
 				<p>...oh dear. There's <i>supposed</i> to be my most recent GitHub activity here, but it looks like
 					GitHub doesn't feel like sharing today. Oh well. Care to <a href="https://github.com/lucypoulton">
