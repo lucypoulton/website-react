@@ -4,7 +4,7 @@ import {Fade, Navbar, Theme} from 'lucy-react-components';
 import {Route, Switch, useLocation} from 'wouter';
 import {ProjectPage} from "./pages/project";
 import IndexPage from "./pages";
-import {PronounsCloudPage} from "./pages/pnc";
+import {PronounsCloudPage} from "./pages/pn";
 
 import 'lucy-react-components/dist/index.css';
 import {projectDataLoad} from './environment'
@@ -37,7 +37,7 @@ function App() {
 			<Fade fadeIn={fade}>
 				<Switch location={location}>
 					<Route path="/" component={IndexPage}/>
-					<Route path="/pnc" component={PronounsCloudPage} />
+					<Route path="/pn" component={PronounsCloudPage} />
 					<Route path="/:project" component={ProjectPage}/>
 				</Switch>
 			</Fade>

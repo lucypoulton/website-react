@@ -11,7 +11,7 @@
     background: transparent;
     font-family: inherit;
     text-align: center;
-    width: 5em;
+    width: 6em;
     border-bottom: 2px solid var(--dark-secondary);
     border-radius: 2px;
 }
